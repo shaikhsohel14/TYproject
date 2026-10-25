@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - KnowledgeHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #0b1f3a;
+        }
+
+        header {
+            background: #0b1f3a;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .profile-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-heading h2 {
+            margin-bottom: 10px;
+            font-size: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .profile-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .profile-tabs button {
+            padding: 10px 18px;
+            border: 1px solid #0b1f3a;
+            border-radius: 6px;
+            background: white;
+            color: #0b1f3a;
+            cursor: pointer;
+        }
+
+        .profile-tabs button.active {
+            background: #0b1f3a;
+            color: white;
+        }
+
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-item h4 {
+            margin-bottom: 6px;
+        }
+
+        .book-item p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .book-item a,
+        .remove-btn {
+            display: inline-block;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background: #0b1f3a;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .empty-message {
+            color: #64748b;
+            padding: 10px 0;
+        }
+
+        footer {
+            background: #0b1f3a;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 550px) {
+            header {
+                padding: 18px;
+            }
+
+            header h1 {
+                font-size: 21px;
+            }
+
+            .profile-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .book-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        .remove-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background: #b91c1c;
+}
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="/">KnowledgeHub</a></h1>
+        <a href="/">← Back to Home</a>
+    </header>
+
+    <main class="profile-container">
+
+        <div class="profile-heading">
+            <h2>My Profile</h2>
+            <p>Your personal reading space — {{ user_name }} · <a href="/logout">Log out</a></p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-tabs">
+                <button id="historyTab" class="active"
+                        onclick="showTab('history')">
+                    Reading History
+                </button>
+
+                <button id="savedTab"
+                        onclick="showTab('saved')">
+                    Saved Books
+                </button>
+            </div>
+
+            <section id="historySection">
+                <h3>Reading History</h3>
+                <div id="historyList"></div>
+            </section>
+
+            <section id="savedSection" style="display: none;">
+                <h3>Saved Books</h3>
+                <div id="savedList"></div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 KnowledgeHub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTab(tab) {
+            document.getElementById('historySection').style.display = tab === 'history' ? 'block' : 'none';
+            document.getElementById('savedSection').style.display = tab === 'saved' ? 'block' : 'none';
+            document.getElementById('historyTab').classList.toggle('active', tab === 'history');
+            document.getElementById('savedTab').classList.toggle('active', tab === 'saved');
+        }
+        function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+        async function loadProfile() {
+            const [historyResponse, savedResponse] = await Promise.all([fetch('/api/history'), fetch('/api/saved')]);
+            const historyData = await historyResponse.json(); const savedData = await savedResponse.json();
+            renderBooks(historyData.books || [], 'historyList', false);
+            renderBooks(savedData.books || [], 'savedList', true);
+        }
+        function renderBooks(books, containerId, saved) {
+            const container = document.getElementById(containerId); container.innerHTML = '';
+            if (!books.length) { container.innerHTML = '<p class="empty-message">No books here yet.</p>'; return; }
+            books.forEach(book => {
+                const item = document.createElement('div'); item.className='book-item';
+                const info=document.createElement('div'); info.innerHTML='<h4>'+escapeHtml(book.book_title)+'</h4><p>'+escapeHtml(book.category || 'Book')+'</p>';
+                const actions=document.createElement('div');
+                if (book.book_url) { const a=document.createElement('a'); a.href=book.book_url; a.textContent='Read More'; a.target='_blank'; a.rel='noopener noreferrer'; actions.appendChild(a); }
+                if (saved) { const b=document.createElement('button'); b.className='remove-btn'; b.textContent='Remove'; b.style.marginLeft='8px'; b.onclick=async()=>{await fetch('/api/saved/'+book.book_id,{method:'DELETE'});loadProfile();}; actions.appendChild(b); }
+                else { const p=document.createElement('p'); p.textContent=book.last_read_at ? 'Last read: '+new Date(book.last_read_at).toLocaleString() : ''; info.appendChild(p); }
+                item.appendChild(info); item.appendChild(actions); container.appendChild(item);
+            });
+        }
+        loadProfile().catch(()=>{document.getElementById('historyList').textContent='Could not load profile. Make sure the Flask server is running.';});
+    </script>
+
+</body>
+</html>
+```

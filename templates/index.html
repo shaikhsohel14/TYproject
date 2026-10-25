@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnowledgeHub</title>
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #172033;
+}
+
+/* Header */
+
+header {
+    background: #0b1f3a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+nav a:hover {
+    color: #b8d4ff;
+}
+
+/* Hero */
+
+.hero {
+    text-align: center;
+    padding: 70px 20px;
+    background: white;
+}
+
+.hero h2 {
+    font-size: 36px;
+    color: #0b1f3a;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    margin-bottom: 25px;
+    color: #555;
+}
+
+#searchBox {
+    width: 80%;
+    max-width: 500px;
+    padding: 14px;
+    border: 2px solid #0b1f3a;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* Books */
+
+.books {
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.books h2 {
+    color: #0b1f3a;
+    margin-bottom: 25px;
+}
+
+/* Three columns on desktop */
+
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+
+/* Equal-height book cards */
+
+.book {
+    background: white;
+    width: 100%;
+    min-width: 0;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(11, 31, 58, 0.15);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Consistent book cover size */
+
+.book-cover {
+    display: block;
+    width: 150px;
+    height: 210px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.book-cover:hover {
+    transform: scale(1.03);
+}
+
+.book-card a {
+    display: flex;
+    justify-content: center;
+}
+
+/* Consistent title area */
+
+.book h3 {
+    color: #0b1f3a;
+    font-size: 20px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    min-height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Book category or author */
+
+.book p {
+    color: #666;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+/* Aligned Read More buttons */
+
+.read-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    min-height: 48px;
+    margin-top: auto;
+    padding: 12px 20px;
+
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 7px;
+
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+}
+
+.read-more:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+
+footer {
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    background: #0b1f3a;
+    color: white;
+}
+
+.category-section {
+    padding: 50px 20px;
+    text-align: center;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.category-section h2 {
+    color: #0b1f3a;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.category-description {
+    color: #666;
+    margin-bottom: 35px;
+}
+
+.category-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.category-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #172033;
+    box-shadow: 0 3px 12px rgba(11, 31, 58, 0.12);
+    transition: 0.3s;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(11, 31, 58, 0.2);
+}
+
+.category-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+    color: #0b1f3a;
+    margin-bottom: 10px;
+}
+
+.category-card p {
+    color: #666;
+    line-height: 1.5;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .category-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.about-section {
+    max-width: 1100px;
+    margin: auto;
+    padding: 55px 20px;
+    text-align: center;
+}
+
+.about-section > h2 {
+    color: #0b1f3a;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.about-intro {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    color: #666;
+    line-height: 1.6;
+    font-size: 17px;
+}
+
+.about-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.about-card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(11, 31, 58, 0.12);
+}
+
+.about-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.about-card h3 {
+    color: #0b1f3a;
+    margin-bottom: 12px;
+}
+
+.about-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.about-message {
+    margin-top: 45px;
+    padding: 40px 25px;
+    background: #0b1f3a;
+    color: white;
+    border-radius: 12px;
+}
+
+.about-message h2 {
+    margin-bottom: 12px;
+}
+
+.about-message p {
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .about-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* Header with Login button */
+
+
+.main-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-header h1 {
+    justify-self: start;
+}
+
+.main-header nav {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-header .login-btn {
+    justify-self: end;
+}
+
+.main-header h1 {
+    margin-bottom: 0;
+    font-size: 26px;
+}
+
+.main-header nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-header nav a {
+    margin: 0 5px;
+}
+
+.login-btn {
+    background: white;
+    color: #0b1f3a;
+    border: 2px solid white;
+    padding: 10px 22px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #b8d4ff;
+}
+
+/* Mobile layout */
+
+@media (max-width: 800px) {
+    .main-header {
+        flex-direction: column;
+    }
+
+    .main-header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+/* Login page */
+
+.login-section {
+    min-height: 70vh;
+    padding: 50px 20px;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fa;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    padding: 35px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(11, 31, 58, 0.15);
+}
+
+.login-card h2 {
+    color: #0b1f3a;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-card > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.login-card label {
+    display: block;
+    margin: 15px 0 8px;
+    color: #172033;
+    font-weight: bold;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd3df;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.login-submit {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    background: #0b1f3a;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-submit:hover {
+    background: #163d70;
+}
+
+.login-card .switch-text {
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.text-button {
+    border: none;
+    background: none;
+    color: #164b91;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
+/* Tablet: 2 books per row */
+
+@media (max-width: 900px) {
+    .book-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+/* Mobile: 1 book per row */
+
+@media (max-width: 550px) {
+    .book-container {
+        grid-template-columns: 1fr;
+    }
+
+    .book-cover {
+        width: 150px;
+        height: 210px;
+    }
+}
+
+/* Fix header layout on mobile */
+
+@media (max-width: 800px) {
+    .main-header {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .main-header nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+/* Search bar with magnifying glass */
+
+.search-container {
+    position: relative;
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 45px 14px 14px;
+    border: 2px solid #0b1f3a;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-container input:focus {
+    border-color: #007bff;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+.login-btn {
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Center book cover images inside each card */
+.book > a:first-child {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.book .book-cover {
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* ===== MOBILE RESPONSIVE DESIGN ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Book grid */
+.book-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.book {
+    min-width: 0;
+    height: 100%;
+    padding: 15px;
+    text-align: center;
+}
+
+.book .book-cover {
+    display: block;
+    width: 115px;
+    height: 155px;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.book h3 {
+    overflow-wrap: anywhere;
+    font-size: 16px;
+}
+
+.book .read-more {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Tablets and smaller screens */
+@media (max-width: 768px) {
+    .book-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .book {
+        padding: 12px;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .book-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .book {
+        padding: 10px;
+    }
+
+    .book .book-cover {
+        width: 100px;
+        height: 140px;
+    }
+
+    .book h3 {
+        font-size: 14px;
+    }
+
+    .book p {
+        font-size: 13px;
+    }
+
+    .book .read-more {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    .search-container {
+        max-width: 100%;
+    }
+
+    .search-container input {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+/* Very narrow phones */
+@media (max-width: 340px) {
+    .book-container {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.save-btn {
+    background: white;
+    color: #0b1f3a;
+    border: 1px solid #0b1f3a;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin: 8px 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.save-btn:hover {
+    background: #0b1f3a;
+    color: white;
+}
+
+
+/* Read More and Save buttons side by side */
+.book-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+.book-actions .read-more {
+    min-width: 0;
+    width: auto;
+    margin: 0;
+    padding: 12px 16px;
+    font-size: 16px;
+}
+
+.book-actions .save-btn {
+    margin: 0;
+    padding: 12px 14px;
+    background: white;
+    color: #0b1f3a;
+    border: 1px solid #0b1f3a;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Save button styling */
+.book-actions .save-btn {
+    margin: 0;
+    padding: 12px 14px;
+    background: white;
+    color: #0b1f3a;
+    border: 1px solid #0b1f3a;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Only the heart is red */
+.book-actions .save-btn .heart {
+    color: red !important;
+}
+
+/* Saved state: text and border stay dark blue */
+.book-actions .save-btn.saved {
+    color: #0b1f3a;
+    border-color: #0b1f3a;
+}
+
+/* Keep heart red when saved */
+.book-actions .save-btn.saved .heart {
+    color: red !important;
+}
+
+/* Hover effect */
+.book-actions .save-btn:hover {
+    background: #fff0f0;
+}
+
+/* Button alignment */
+.book > .save-btn {
+    margin-top: 0;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.book > .read-more {
+    margin-top: auto;
+}
+
+.book-actions .save-btn .heart {
+    color: blue !important;
+}
+
+.book-actions .save-btn.saved .heart {
+    color: blue !important;
+}
+
+/* Fix Read More and Save buttons on mobile */
+@media (max-width: 480px) {
+    .book-actions {
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .book-actions .read-more {
+        padding: 8px 9px;
+        font-size: 12px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .book-actions .save-btn {
+        padding: 8px 9px;
+        font-size: 12px;
+        margin: 0;
+        flex: 1;
+    }
+}
+
+/* Extra-small mobile screens */
+@media (max-width: 360px) {
+    .book-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .book-actions .read-more,
+    .book-actions .save-btn {
+        width: 100%;
+        flex: none;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+    
+<header class="main-header">
+    <h1>📚 KnowledgeHub</h1>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#all-books">Books</a>
+    <a href="#categories">Categories</a>
+    <a href="#about">About</a>
+</nav>
+
+<a href="/profile" class="login-btn" id="profileLink">👤 Profile</a>
+</header>
+
+    <main>
+
+        <section class="hero" id="home">
+            <h2>Discover Your Next Book</h2>
+            <p>Explore our collection of books and find something interesting to read.</p>
+
+            <div class="search-container">
+    <input type="text" id="searchBox"
+           placeholder="Search for a book...">
+
+    <button type="button" class="search-btn"
+            onclick="searchAndGoToBooks()">
+        🔍
+    </button>
+</div>
+        </section>
+
+        <section class="books" id="books">
+
+            <h2>Popular Books</h2>
+
+            <div class="book-container">
+
+                <div class="book">
+                    <a href="book-details.html">
+                    <img src="https://m.media-amazon.com/images/I/71XEsXS5RlL._AC_UF1000,1000_QL80_.jpg"
+                    alt="The Psychology of Money Cover"
+                    class="book-cover">
+                    </a>
+                    <h3>The Psychology of Money</h3>
+                    <p>Morgan Housel</p>
+                    <div class="book-actions">
+
+                    <a href="https://cpcglobal.org/publications/The%20Psychology%20of%20Money.pdf" class="read-more" onclick="recordReading(event, this)"> Read book </a>
+
+                    <button type="button" class="save-btn" onclick="saveBook(this)">
+                    <span class="heart">♡</span> Save
+                    </button>
+
+                    </div>
+                </div>
+
+                <div class="book">
+                    <a href="book-details.html">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT2Zk6v_JxxB08JlN5xIkLORzjrUhJwBoVDb76jTL3Hg&s=10"
+                    alt="The Psychology of Money Cover"
+                    class="book-cover">
+                    </a>
+                    <h3>Rich Dad and Poor Dad</h3>
+                    <p>Robert T. Kiyosaki</p>
+                    <div class="book-actions">
+                    <a href="https://s3.amazonaws.com/rd-downloads-01/Rich-Dad-Poor-Dad-eBook.pdf"
+                    class="read-more"
+                    onclick="recordReading(event, this)">Read book</a>
+
+                    <button type="button" class="save-btn" onclick="saveBook(this)"> <span class="heart">♡</span> Save </button>
+                </div>
+                </div>
+
+                <div class="book">
+                    <a href="book-details.html">
+                    <img src="https://m.media-amazon.com/images/I/61IxJuRI39L._AC_UF1000,1000_QL80_.jpg"
+                    alt="The Psychology of Money Cover"
+                    class="book-cover">
+                    </a>
+                    <h3>Think and Grow Rich</h3>
+                    <p>Napoleon Hill</p>
+                    <div class="book-actions">
+                    <a href="https://sistem42.com/wp-content/uploads/2022/08/Think-And-Grow-Rich-Napoleon-Hill.pdf"
+                    class="read-more"
+                    onclick="recordReading(event, this)">Read book</a>
+
+                    <button type="button" class="save-btn"
+                    onclick="saveBook(this)">
+                    <span class="heart">♡</span> Save
+                    </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+                <section class="category-section" id="categories">
+
+            <h2>Book Categories</h2>
+
+            <p class="category-description">
+                Explore books by category and discover your next favorite read.
+            </p>
+
+            <div class="category-container">
+
+                <a href="#all-books" class="category-card" data-category="fantasy">
+                    <div class="category-icon">🧙</div>
+                    <h3>Fantasy</h3>
+                    <p>Explore magical worlds, mythical creatures, and epic adventures.</p>
+                </a>
+
+                <a href="#all-books" class="category-card" data-category="romance">
+                    <div class="category-icon">❤️</div>
+                    <h3>Romance</h3>
+                    <p>Discover love stories, relationships, and emotional journeys.</p>
+                </a>
+
+                <a href="#all-books" class="category-card" data-category="horror">
+                    <div class="category-icon">👻</div>
+                    <h3>Horror</h3>
+                    <p>Experience chilling stories, mysteries, and supernatural suspense.</p>
+                </a>
+
+                <a href="#all-books" class="category-card" data-category="psychology">
+                    <div class="category-icon">🧠</div>
+                    <h3>Psychology</h3>
+                    <p>Understand human behavior, emotions, and the mind.</p>
+                </a>
+
+                <a href="#all-books" class="category-card" data-category="science-fiction">
+                    <div class="category-icon">🚀</div>
+                    <h3>Science Fiction</h3>
+                    <p>Explore futuristic technology, space, and imaginative worlds.</p>
+                </a>
+
+                <a href="#all-books" class="category-card" data-category="education">
+                    <div class="category-icon">📚</div>
+                    <h3>Education</h3>
+                    <p>Learn new skills through educational books and study resources.</p>
+                </a>
+
+            </div>
+
+        </section>
+
+                        <section class="about-section" id="about">
+
+            <h2>About KnowledgeHub</h2>
+
+            <p class="about-intro">
+                KnowledgeHub is a digital library where readers can
+                discover books from different genres in one place.
+            </p>
+
+            <div class="about-container">
+
+                <div class="about-card">
+
+                    <div class="about-icon">📚</div>
+
+                    <h3>Our Collection</h3>
+
+                    <p>
+                        Explore Fantasy, Romance, Horror, Psychology,
+                        Science Fiction, and Education books.
+                    </p>
+
+                </div>
+
+                <div class="about-card">
+
+                    <div class="about-icon">🔎</div>
+
+                    <h3>Explore & Discover</h3>
+
+                    <p>
+                        Browse categories and search for books
+                        that match your interests.
+                    </p>
+
+                </div>
+
+                <div class="about-card">
+
+                    <div class="about-icon">🎯</div>
+
+                    <h3>Our Goal</h3>
+
+                    <p>
+                        Make discovering and accessing books
+                        simple and convenient for everyone.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="about-message">
+
+                <h2>Read. Discover. Grow.</h2>
+
+                <p>
+                    Discover new stories, gain knowledge,
+                    and find your next favorite book with KnowledgeHub.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="books" id="all-books">
+
+            <h2>All Books</h2>
+
+            <div class="search-container">
+    <input type="text" id="allSearchBox"
+           placeholder="Search books...">
+
+    <button type="button" class="search-btn"
+            onclick="showBooks()" aria-label="Search">
+        🔍
+    </button>
+</div>
+
+            <br><br>
+
+                            <div class="book-container">
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7GD6-r5bUAYzcUBUPEmEtD7WymjjFjP6B_v6MDN56RQ&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        
+                        <h3>Harry Potter and the Philosopher's Stone</h3>
+                        <p>Fantasy</p>
+                        <div class="book-actions">
+                        <a href="https://thebookshelfbeforeme.wordpress.com/wp-content/uploads/2020/04/harry-potter-and-the-philosophers-stone-by-jk-rowling.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                        </div>
+                    </div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-400/1523-1/F2B/075/BB/%7BF2B075BB-ED93-4AE0-95B4-1D2B9AD1DB6A%7DImg400.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Fault in Our Stars</h3>
+                        <p>Romance</p>
+                        <div class="book-actions">
+                        <a href="https://spensabayalibrary.wordpress.com/wp-content/uploads/2016/04/the-fault-in-our-stars.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div>
+                    </div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://archive.org/services/img/dracula-bram-stoker/full/pct:200/0/default.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Dracula</h3>
+                        <p>Horror</p>
+                        <div class="book-actions">
+                        <a href="https://dn721607.ca.archive.org/0/items/dracula-bram-stoker/Dracula%20-%20Bram%20Stoker.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div>
+                    </div>
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv_PLIQoA1uJ5-QfPQhVZ4ujzTxq3aTP1aO25CfWfEMg&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Thinking, Fast and Slow</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://dn790002.ca.archive.org/0/items/DanielKahnemanThinkingFastAndSlow/Daniel%20Kahneman-Thinking,%20Fast%20and%20Slow%20%20.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-400/0111-1/82E/F8E/C3/%7B82EF8EC3-386B-4561-8F65-2D59433B9358%7DImg400.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Martian</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://ia803109.us.archive.org/10/items/TheMartian_201808/The%20Martian.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfWeJ7mFahhTJXD8P--vIJHxdYTFL39frPNV2a36iDtQ&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Atomic Habits</h3>
+                        <p>Education</p><div class="book-actions">
+                        <a href="https://dn790007.ca.archive.org/0/items/atomic-habits-pdfdrive/Atomic%20habits%20%28%20PDFDrive%20%29.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://imgv2-2-f.scribdassets.com/img/document/695526565/original/fae190bbac/1?v=1"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Hobbit</h3>
+                        <p>Fantasy</p><div class="book-actions">
+                        <a href="https://rsd2-alert-durden-reading-room.weebly.com/uploads/6/7/1/6/6716949/the_hobbit_tolkien.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://storage.googleapis.com/media365-live.appspot.com/266c3ce1-c23a-4770-bbe7-8e37467cc81c/22ce3cd6-766e-420b-98a2-bbdcd42d0605/9a042421-4511-4505-91dd-5f9b3429479c.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Pride and Prejudice</h3>
+                        <p>Romance</p><div class="book-actions">
+                        <a href="https://dn790002.ca.archive.org/0/items/prideprejudice00aust/prideprejudice00aust.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://img3.od-cdn.com/ImageType-400/0111-1/%7B8667DB9C-8D77-4118-9605-02E6EE0DC4A9%7DIMG400.JPG"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Shining</h3>
+                        <p>Horror</p><div class="book-actions">
+                        <a href="https://cdn.ysk-book.com/books/pdf/XIe8Tq9sTE0h5blwJBOwtUk23GuHD5imB55wNPS4.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT89Pt1TZ1yqB82x06XG-yWnqX6qXzWsMR8Y6g5OK1_vw4I0X7hQkjV_TI2&s=10"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Power of Habit</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://globalmissionbibleinstitute.org/wp-content/uploads/2022/06/Power-of-Habit.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUog0HUi4VZZd9Dw8dMhSwJHHrpBzCuq_-7io0E15fpw&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Dune</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://www.hetako.ee/kamp/ulme/Frank%20Herbert%20-%20Dune%201%20-%20Dune.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                        <a href="book-details.html">
+                        <img src="https://cdn.kobo.com/book-images/656aba0c-e1e7-49d2-af70-e07be17007f0/1200/1200/False/a-brief-history-of-time.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>A Brief History of Time</h3>
+                        <p>Education</p><div class="book-actions">
+                        <a href="https://www.fisica.net/relatividade/stephen_hawking_a_brief_history_of_time.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAATlWasxXqYHUqW_KOUGZh3LSX1m9XJ3XRkS2-apVRw&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>A Game of Thrones</h3>
+                        <p>Fantasy</p><div class="book-actions">
+                        <a href="https://www.nothuman.net/images/files/discussion/1/e72f9f1f181a66887baa7270037c582e.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://imgv2-2-f.scribdassets.com/img/document/359433183/original/921fdaf1eb/1?v=1"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Me Before You</h3>
+                        <p>Romance</p><div class="book-actions">
+                        <a href="https://icrrd.com/public/media/14-05-2021-091024Me-Before-You.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-400/4333-1/%7B69614B16-7A56-4972-A2DF-CE86E3FBE5E8%7DIMG400.JPG"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Frankenstein</h3>
+                        <p>Horror</p><div class="book-actions">
+                        <a href="https://ia801905.us.archive.org/17/items/Frankenstein1818Edition/frank-a5.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYOFnI6xDgjgLQkK4iuI9wh8Hor2bKG2yUp1-UriN5UA&s"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Influence: The Psychology of Persuasion</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://dn710600.ca.archive.org/0/items/ThePsychologyOfPersuasion/The%20Psychology%20of%20Persuasion.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://img.perlego.com/book-covers/1811945/9781783195602.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>1984</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://dn790002.ca.archive.org/0/items/NineteenEightyFour-Novel-GeorgeOrwell/orwell1984.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-400/0111-1/53C/344/ED/%7B53C344ED-EC8B-4999-A131-F3927BBE9A17%7DImg400.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>How to Win at College</h3>
+                        <p>Education</p><div class="book-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/en/how-to-win-at-college.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://img3.od-cdn.com/ImageType-100/0293-1/%7B013BAF38-54D2-4271-A71D-EFD85F4BE53C%7DIMG100.JPG"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Lion, the Witch and the Wardrobe</h3>
+                        <p>Fantasy</p><div class="book-actions">
+                        <a href="https://ia601804.us.archive.org/8/items/english-collections-k-z/Lion%2C%20the%20Witch%20and%20the%20Wardrobe%2C%20The%20-%20C.%20S.%20Lewis.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781501110375/it-ends-with-us-9781501110375_hr.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>It Ends with Us</h3>
+                        <p>Romance</p><div class="book-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/en/it-ends-with-us.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://archive.org/services/img/hauntingofhillho0000jack_f7p6"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Haunting of Hill House</h3>
+                        <p>Horror</p><div class="book-actions">
+                        <a href="https://havenner.weebly.com/uploads/2/0/5/7/20575006/jackson-shirley-the-haunting-of-hill-house.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://m.media-amazon.com/images/I/71XEsXS5RlL._AC_UF1000,1000_QL80_.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Psychology of Money</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://cpcglobal.org/publications/The%20Psychology%20of%20Money.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-400/2390-1/B9A/5B9/EF/%7BB9A5B9EF-DC59-4A03-9AF4-F88385D3E3AF%7DImg400.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Ender's Game</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://resources.finalsite.net/images/v1563819368/rcsdms/zubpw0ly7e6g3rm1n3fk/EndersGame.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                    <a href="book-details.html">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT2Zk6v_JxxB08JlN5xIkLORzjrUhJwBoVDb76jTL3Hg&s=10"
+                    alt="The Psychology of Money Cover"
+                    class="book-cover">
+                    </a>
+                    <h3>Rich Dad and Poor Dad</h3>
+                    <p>Education</p><div class="book-actions">
+                    <a href="https://kolegite.com/EE_library/books_and_lectures/%D0%94%D1%80%D1%83%D0%B3%D0%B8/top%20self-develovment%20books/epdf.pub_rich-dad-poor-dad.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                    <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://imgv2-2-f.scribdassets.com/img/document/164831270/original/dbfe267454/1?v=1"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Fellowship of the Ring</h3>
+                        <p>Fantasy</p><div class="book-actions">
+                        <a href="https://dn760002.eu.archive.org/0/items/j-r-r-tolkien-lord-of-the-rings-01-the-fellowship-of-the-ring-retail-pdf/j-r-r-tolkien-lord-of-the-rings-01-the-fellowship-of-the-ring-retail-pdf.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://bdebooks.com/en/wp-content/uploads/2023/09/The-Notebook.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Notebook</h3>
+                        <p>Romance</p><div class="book-actions">
+                        <a href="https://visaldiary.wordpress.com/wp-content/uploads/2011/05/the-notebook.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://mbassets.b-cdn.net/cdni/book-cover/1639409306_080565400.jpg?w=200&q=50"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Turn of the Screw</h3>
+                        <p>Horror</p><div class="book-actions">
+                        <a href="https://www.ibiblio.org/ebooks/James/Turn_Screw.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://bdebooks.com/en/wp-content/uploads/2023/08/cover-718.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Games People Play</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/en/games-people-play.pdf" class="read-more"onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://bdebooks.com/en/wp-content/uploads/2023/08/cover-871.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Three-Body Problem</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://files.addictbooks.com/wp-content/uploads/2024/05/The-Three-Body-Problem.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                        <a href="book-details.html">
+                        <img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781471195204/the-7-habits-of-highly-effective-people-revised-and-updated-9781471195204_hr.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The 7 Habits of Highly Effective People</h3>
+                        <p>Education</p><div class="book-actions">
+                        <a href="https://icrrd.com/public/media/01-11-2020-212827The%207%20Habits%20of%20Highly%20Effective%20People.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="fantasy">
+                        <a href="book-details.html">
+                        <img src="https://imgv2-1-f.scribdassets.com/img/document/61938050/original/dd30a43b60/1?v=1"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Hunger Games</h3>
+                        <p>Fantasy</p><div class="book-actions">
+                        <a href="https://mcla7th.weebly.com/uploads/1/4/0/8/14084007/hunger-games-18.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="romance">
+                        <a href="book-details.html">
+                        <img src="https://cdn2.penguin.com.au/covers/original/9780241995341.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Book Lovers</h3>
+                        <p>Romance</p><div class="book-actions">
+                        <a href="https://cdn.penguin.co.uk/dam-assets/books/9780241995341/9780241995341-sample.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="horror">
+                        <a href="book-details.html">
+                        <img src="https://bdebooks.com/en/wp-content/uploads/2023/09/Bird-Box.png"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Bird Box</h3>
+                        <p>Horror</p><div class="book-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/en/bird-box.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="psychology">
+                        <a href="book-details.html">
+                        <img src="https://img1.od-cdn.com/ImageType-100/0111-1/%7B7BD6070E-181D-4685-9444-E82CBB01A30C%7DImg100.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Emotional Intelligence</h3>
+                        <p>Psychology</p><div class="book-actions">
+                        <a href="https://nacin.gov.in/Documents/e-Books/Vadodara/Emotional%20Intelligence%20Book.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="science-fiction">
+                        <a href="book-details.html">
+                        <img src="https://img.perlego.com/book-covers/650153/9781974995561.jpg"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>The Time Machine</h3>
+                        <p>Science Fiction</p><div class="book-actions">
+                        <a href="https://www.fourmilab.ch/etexts/www/wells/timemach/timemach.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                    <div class="book" data-category="education">
+                        <a href="book-details.html">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZcyTad4S1Hiq4zh_d33fQSGvNzFmMT28UFTqxZiwcbqvr3-IrJUSy2GU&s=10"
+                        alt="The Psychology of Money Cover"
+                        class="book-cover">
+                        </a>
+                        <h3>Ultralearning</h3>
+                        <p>Education</p><div class="book-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/en/ultralearning.pdf" class="read-more" onclick="recordReading(event, this)">Read book</a>
+                        <button type="button" class="save-btn" onclick="saveBook(this)"><span class="heart">♡</span> Save</button>
+                    </div></div>
+
+                </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 KnowledgeHub</p>
+    </footer>
+
+    <script>
+ 
+const searchBoxes = [
+    document.getElementById("searchBox"),
+    document.getElementById("allSearchBox")
+].filter(Boolean);
+
+const allBooksSection = document.getElementById("all-books");
+const allBooks = allBooksSection.querySelectorAll(".book");
+const categoryLinks = document.querySelectorAll(".category-card");
+
+let selectedCategory = "";
+
+function showBooks() {
+    const searchText = searchBoxes[0]?.value.trim().toLowerCase() || "";
+
+    allBooks.forEach(function(book) {
+        const title = book.querySelector("h3").textContent.toLowerCase();
+        const category = book.dataset.category;
+
+        const categoryName = book.querySelector("p").textContent.toLowerCase();
+
+const matchesSearch =
+    title.includes(searchText) ||
+    categoryName.includes(searchText);
+
+        const matchesCategory =
+            !selectedCategory || category === selectedCategory;
+
+        book.style.display =
+            matchesSearch && matchesCategory ? "block" : "none";
+    });
+}
+
+searchBoxes.forEach(function(box) {
+    box.addEventListener("input", function() {
+        searchBoxes.forEach(function(otherBox) {
+            if (otherBox !== box) {
+                otherBox.value = box.value;
+            }
+        });
+
+        showBooks();
+    });
+});
+
+categoryLinks.forEach(function(link) {
+    link.addEventListener("click", function() {
+        selectedCategory = link.dataset.category;
+        searchBoxes.forEach(function(box) {
+            box.value = "";
+        });
+        showBooks();
+
+        allBooksSection.scrollIntoView({ behavior: "smooth" });
+    });
+});
+
+document.querySelector('nav a[href="#books"]')
+    .addEventListener("click", function() {
+        selectedCategory = "";
+        showBooks();
+    });
+
+
+function searchAndGoToBooks() {
+    showBooks();
+
+    document.getElementById("all-books").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function openProfile() {
+    document.getElementById("profile-section").style.display = "block";
+
+    document.querySelectorAll(
+        "body > header, body > section, body > footer"
+    ).forEach(function(element) {
+        if (element.id !== "profile-section") {
+            element.dataset.previousDisplay = element.style.display;
+            element.style.display = "none";
+        }
+    });
+
+    document.getElementById("profile-section").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+function closeProfile() {
+    document.getElementById("profile-section").style.display = "none";
+
+    document.querySelectorAll(
+        "body > header, body > section, body > footer"
+    ).forEach(function(element) {
+        if (element.id !== "profile-section") {
+            element.style.display =
+                element.dataset.previousDisplay || "";
+            delete element.dataset.previousDisplay;
+        }
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showProfileTab(tab) {
+    document.getElementById("reading-history").style.display =
+        tab === "history" ? "block" : "none";
+
+    document.getElementById("saved-books").style.display =
+        tab === "saved" ? "block" : "none";
+}
+
+async function recordReading(event, link) {
+    event.preventDefault();
+    const book = link.closest('.book');
+    if (!book) return;
+    const title = book.querySelector('h3')?.textContent.trim();
+    const category = book.querySelector('p')?.textContent.trim() || 'Book';
+    const url = link.href;
+    try {
+        const response = await fetch('/api/history', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({title, category, url})});
+        if (response.status === 401) { window.location.href='/login?next='+encodeURIComponent(window.location.pathname); return; }
+        if (!response.ok) { alert('Could not save reading history.'); return; }
+    } catch (e) { alert('Could not connect to the server.'); return; }
+    window.location.href = url;
+}
+
+async function saveBook(button) {
+    const book = button.closest('.book');
+    if (!book) return;
+    const title = book.querySelector('h3')?.textContent.trim();
+    const category = book.querySelector('p')?.textContent.trim() || 'Book';
+    const link = book.querySelector('.read-more');
+    if (!title || !link) return;
+    try {
+        const response = await fetch('/api/saved', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({title, category, url:link.href})});
+        if (response.status === 401) { window.location.href='/login'; return; }
+        const data = await response.json();
+        if (!response.ok) { alert(data.error || 'Could not save book.'); return; }
+        button.classList.toggle('saved', data.saved);
+        button.innerHTML = data.saved ? '<span class="heart">♥</span> Saved' : '<span class="heart">♡</span> Save';
+    } catch (e) { alert('Could not connect to the server.'); }
+}
+
+async function updateSaveButtons() {
+    try {
+        const response = await fetch('/api/saved');
+        if (!response.ok) return;
+        const data = await response.json();
+        document.querySelectorAll('.book').forEach(function(book) {
+            const title = book.querySelector('h3')?.textContent.trim();
+            const button = book.querySelector('.save-btn');
+            if (!title || !button) return;
+            const isSaved = data.books.some(item => item.book_title === title);
+            button.classList.toggle('saved', isSaved);
+            button.innerHTML = isSaved ? '<span class="heart">♥</span> Saved' : '<span class="heart">♡</span> Save';
+        });
+    } catch (e) { /* server may not be running yet */ }
+}
+document.addEventListener('DOMContentLoaded', updateSaveButtons);
+    </script>
+
+</body>
+</html>
